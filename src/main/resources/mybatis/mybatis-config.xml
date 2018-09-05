@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+    <!-- 引入外部properties文件，需要放在configuration的开端 -->
+    <properties resource="jdbc.properties"/>
+
+    <!-- 配置全局属性 -->
+    <settings>
+        <!-- 使用jdbc的getGeneratedKeys获取数据库自增主键值 -->
+        <setting name="useGeneratedKeys" value="true"/>
+        <!-- 使用列别名替换列名 默认为true
+            select name as title from table
+        -->
+        <setting name="useColumnLabel" value="true"/>
+        <!-- 开启驼峰命名转换：Table（create——time）-> Entity(createTime) -->
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
+    </settings>
+
+    <!-- 扫描返回值结果集，使得mapper文件中可以简化结果集的写法 -->
+    <typeAliases>
+        <typeAlias type="org.ssmTest.entity.Person"/>
+    </typeAliases>
+
+    <environments default="development">
+        <environment id="development">
+            <!-- type="JDBC" 代表使用JDBC的提交和回滚来管理事务 -->
+            <transactionManager type="JDBC"/><!-- 事务管理类型：JDBC、MANAGED -->
+            <!-- mybatis提供了3种数据源类型，分别是：POOLED,UNPOOLED,JNDI -->
+            <!-- POOLED 表示支持JDBC数据源连接池 -->
+            <!-- UNPOOLED 表示不支持数据源连接池 -->
+            <!-- JNDI 表示支持外部数据源连接池 -->
+            <dataSource type="POOLED">
+                <property name="driver" value="${driver}"/>
+                <property name="url" value="${url}"/>
+                <property name="username" value="${username}"/>
+                <property name="password" value="${password}"/>
+            </dataSource>
+        </environment>
+    </environments>
+
+    <mappers>
+        <!-- 告知映射文件方式1，一个一个的配置
+        <mapper resource="com/cy/mybatis/mapper/UserMapper.xml"/>-->
+        <!-- 告知映射文件方式2，自动扫描包内的Mapper接口与配置文件
+        <package name="com/wenyin/mybatis/mapper"/>-->
+        <mapper resource="mapper/PersonDao.xml"/>
+    </mappers>
+
+
+</configuration>

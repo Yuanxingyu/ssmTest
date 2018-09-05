@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+        <!DOCTYPE mapper
+                PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+                "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.ssmTest.dao.PersonDao">
+<!-- 默认的resulttype为int -->
+<!--需要标注结果集,多个参数不用设置parametertype，会自动识别；单个需要说明-->
+<select id="queryAll" resultType="Person">
+        select name,sex,age from person;
+    </select>
+
+</mapper>
